@@ -1,0 +1,370 @@
+---
+title: 'AeroSpace Configuration'
+description: 'AeroSpace tiling window manager configuration for macOS'
+---
+
+## Overview
+
+AeroSpace is a tiling window manager for macOS inspired by i3. This configuration provides vim-style navigation, multiple workspaces, and automatic window tiling with a focus on keyboard-driven workflows.
+
+<Note>
+  AeroSpace runs at login and automatically manages window layouts using keyboard shortcuts with the `Alt` (Option) key.
+</Note>
+
+## Core Settings
+
+### Startup Configuration
+
+```toml
+start-at-login = true
+
+after-login-command = []
+after-startup-command = []
+```
+
+AeroSpace starts automatically at login. You can add custom commands to execute after login or startup.
+
+### Layout Settings
+
+```toml
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+accordion-padding = 30
+```
+
+<Tabs>
+  <Tab title="Layout">
+    ```toml
+    default-root-container-layout = 'tiles'
+    ```
+    Windows are arranged in a tiling layout by default. Alternative: `'accordion'`
+  </Tab>
+  
+  <Tab title="Orientation">
+    ```toml
+    default-root-container-orientation = 'auto'
+    ```
+    - Wide monitors → horizontal split
+    - Tall monitors → vertical split
+    - Manual options: `'horizontal'` or `'vertical'`
+  </Tab>
+  
+  <Tab title="Padding">
+    ```toml
+    accordion-padding = 30
+    ```
+    30 pixels of padding in accordion mode. Set to `0` to disable.
+  </Tab>
+</Tabs>
+
+### Window Gaps
+
+```toml
+[gaps]
+inner.horizontal = 0
+inner.vertical =   0
+outer.left =       0
+outer.bottom =     0
+outer.top =        0
+outer.right =      0
+```
+
+All gaps are set to 0 for a seamless, edge-to-edge window layout.
+
+<Tip>
+  Increase these values if you prefer space between windows. For example, set `inner.horizontal = 10` and `inner.vertical = 10` for 10px gaps.
+</Tip>
+
+### Normalization
+
+```toml
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+```
+
+These settings automatically optimize container layouts for better space utilization.
+
+## Mouse Behavior
+
+```toml
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focus-changed = "move-mouse window-lazy-center"
+```
+
+The mouse cursor automatically follows window focus, centering on the newly focused window or monitor.
+
+## Keybindings
+
+### Window Navigation
+
+Vim-style navigation with `Alt+h/j/k/l`:
+
+```toml
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+```
+
+| Keybinding | Action |
+|------------|--------|
+| `Alt+h` | Focus window to the left |
+| `Alt+j` | Focus window below |
+| `Alt+k` | Focus window above |
+| `Alt+l` | Focus window to the right |
+
+### Window Movement
+
+Move windows with `Alt+Shift+h/j/k/l`:
+
+```toml
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+```
+
+<Note>
+  These keybindings move the currently focused window in the specified direction.
+</Note>
+
+### Window Resizing
+
+```toml
+alt-shift-minus = 'resize smart -50'
+alt-shift-equal = 'resize smart +50'
+```
+
+- `Alt+Shift+-` : Decrease window size by 50 pixels
+- `Alt+Shift+=` : Increase window size by 50 pixels
+
+Smart resizing automatically determines which dimension to adjust.
+
+### Layout Switching
+
+```toml
+alt-slash = 'layout tiles horizontal vertical'
+alt-comma = 'layout accordion horizontal vertical'
+```
+
+<Accordion title="Layout Modes">
+  - **Tiles** (`Alt+/`): Standard tiling layout, cycles between horizontal and vertical
+  - **Accordion** (`Alt+,`): Stack layout with one main window, cycles orientation
+</Accordion>
+
+## Workspaces
+
+### Numeric Workspaces
+
+```toml
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+# ... through alt-9
+```
+
+Access workspaces 1-9 with `Alt+[1-9]`.
+
+### Letter Workspaces
+
+```toml
+alt-a = 'workspace A'
+alt-b = 'workspace B'
+alt-c = 'workspace C'
+# ... through most letters
+```
+
+Available letter workspaces: A, B, C, D, E, F, G, I, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z
+
+<Note>
+  Letters H, J, K, L are used for window navigation, so they're not available as workspace shortcuts.
+</Note>
+
+### Moving Windows to Workspaces
+
+```toml
+alt-shift-1 = 'move-node-to-workspace 1'
+alt-shift-2 = 'move-node-to-workspace 2'
+# ... for all numeric and letter workspaces
+```
+
+Move the current window to a workspace with `Alt+Shift+[key]`.
+
+### Workspace Navigation
+
+```toml
+alt-tab = 'workspace-back-and-forth'
+alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+```
+
+- `Alt+Tab`: Switch to previously focused workspace
+- `Alt+Shift+Tab`: Move current workspace to next monitor
+
+## Service Mode
+
+Enter service mode for advanced operations:
+
+```toml
+alt-shift-semicolon = 'mode service'
+```
+
+### Service Mode Keybindings
+
+```toml
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+f = ['layout floating tiling', 'mode main']
+backspace = ['close-all-windows-but-current', 'mode main']
+
+alt-shift-h = ['join-with left', 'mode main']
+alt-shift-j = ['join-with down', 'mode main']
+alt-shift-k = ['join-with up', 'mode main']
+alt-shift-l = ['join-with right', 'mode main']
+```
+
+<Tabs>
+  <Tab title="Configuration">
+    **Esc** - Reload configuration and return to main mode
+  </Tab>
+  
+  <Tab title="Layout">
+    **r** - Reset layout (flatten workspace tree)
+    **f** - Toggle between floating and tiling layout
+  </Tab>
+  
+  <Tab title="Windows">
+    **Backspace** - Close all windows except current
+    **Alt+Shift+h/j/k/l** - Join current window with adjacent window
+  </Tab>
+</Tabs>
+
+## Complete Keybinding Reference
+
+### Main Mode
+
+| Category | Keybinding | Action |
+|----------|------------|--------|
+| **Navigation** | `Alt+h/j/k/l` | Focus left/down/up/right window |
+| **Movement** | `Alt+Shift+h/j/k/l` | Move window left/down/up/right |
+| **Resize** | `Alt+Shift+-` | Decrease window size |
+| | `Alt+Shift+=` | Increase window size |
+| **Layout** | `Alt+/` | Cycle tiles layout |
+| | `Alt+,` | Cycle accordion layout |
+| **Workspace** | `Alt+[1-9]` | Switch to workspace 1-9 |
+| | `Alt+[letter]` | Switch to lettered workspace |
+| | `Alt+Shift+[key]` | Move window to workspace |
+| | `Alt+Tab` | Previous workspace |
+| | `Alt+Shift+Tab` | Move workspace to next monitor |
+| **Mode** | `Alt+Shift+;` | Enter service mode |
+
+### Service Mode
+
+| Keybinding | Action |
+|------------|--------|
+| `Esc` | Reload config & exit service mode |
+| `r` | Reset/flatten workspace layout |
+| `f` | Toggle floating/tiling mode |
+| `Backspace` | Close all but current window |
+| `Alt+Shift+h/j/k/l` | Join with adjacent window |
+
+<Note>
+  All service mode commands automatically return you to main mode after execution.
+</Note>
+
+## Installation
+
+1. Install AeroSpace:
+   ```bash
+   brew install --cask nikitabobko/tap/aerospace
+   ```
+
+2. Copy configuration:
+   ```bash
+   cp aerospace.toml ~/.aerospace.toml
+   ```
+
+3. Start AeroSpace:
+   ```bash
+   open -a AeroSpace
+   ```
+
+4. Grant Accessibility permissions:
+   - System Settings → Privacy & Security → Accessibility
+   - Add AeroSpace
+
+<Tip>
+  After installation, log out and log back in for `start-at-login` to take effect.
+</Tip>
+
+## Customization Examples
+
+<Accordion title="Add Gaps Between Windows">
+  ```toml
+  [gaps]
+  inner.horizontal = 10
+  inner.vertical =   10
+  outer.left =       10
+  outer.bottom =     10
+  outer.top =        10
+  outer.right =      10
+  ```
+</Accordion>
+
+<Accordion title="Change Default Layout">
+  ```toml
+  default-root-container-layout = 'accordion'
+  default-root-container-orientation = 'horizontal'
+  ```
+</Accordion>
+
+<Accordion title="Disable Mouse Following">
+  ```toml
+  # Comment out or remove these lines:
+  # on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+  # on-focus-changed = "move-mouse window-lazy-center"
+  ```
+</Accordion>
+
+<Accordion title="Add Custom Startup Commands">
+  ```toml
+  after-startup-command = [
+    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0'
+  ]
+  ```
+</Accordion>
+
+## Workflow Tips
+
+<Accordion title="Organizing Workspaces">
+  Use numeric workspaces (1-9) for primary tasks and letter workspaces for specific applications:
+  - **1-3**: Main development workspaces
+  - **9**: Communication (Slack, etc.)
+  - **M**: Music/Media
+  - **B**: Browser
+  - **T**: Terminal-heavy tasks
+</Accordion>
+
+<Accordion title="Quick Window Management">
+  1. `Alt+Shift+;` to enter service mode
+  2. `f` to toggle floating for current window
+  3. `r` to reset layout if windows get messy
+  4. `Esc` to return to normal mode
+</Accordion>
+
+<Accordion title="Multi-Monitor Setup">
+  Use `Alt+Shift+Tab` to quickly move entire workspaces between monitors. Combined with `Alt+Tab` to switch back, this creates a fluid multi-monitor workflow.
+</Accordion>
+
+## Keyboard Layout
+
+```toml
+key-mapping.preset = 'qwerty'
+```
+
+Change to `'dvorak'` if you use Dvorak keyboard layout. This ensures keybindings remain in logical positions.
+
+## Further Resources
+
+- [AeroSpace Official Docs](https://nikitabobko.github.io/AeroSpace/)
+- [Commands Reference](https://nikitabobko.github.io/AeroSpace/commands)
+- [Configuration Guide](https://nikitabobko.github.io/AeroSpace/guide)

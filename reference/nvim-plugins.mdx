@@ -1,0 +1,188 @@
+---
+title: 'Neovim Plugins'
+description: 'Complete reference of installed Neovim plugins and LazyVim extras'
+---
+
+## Custom Plugins
+
+This configuration uses LazyVim as a base and adds several custom plugins for enhanced functionality.
+
+### Productivity & Training
+
+<AccordionGroup>
+  <Accordion title="vim-be-good">
+    **Plugin:** `ThePrimeagen/vim-be-good`
+    
+    A game to practice and improve Vim motions.
+    
+    **Configuration:**
+    - Lazy loaded with `:VimBeGood` command
+    - Use `:VimBeGood` to start training exercises
+    
+    **Source:** `nvim/lua/plugins/vimbegood.lua`
+  </Accordion>
+
+  <Accordion title="LeetCode.nvim">
+    **Plugin:** `kawre/leetcode.nvim`
+    
+    Solve LeetCode problems directly in Neovim.
+    
+    **Configuration:**
+    - Default language: Python3
+    - Dependencies: telescope.nvim, plenary.nvim, nui.nvim
+    - Includes Treesitter HTML support
+    
+    **Source:** `nvim/lua/plugins/leetcode.lua`
+  </Accordion>
+</AccordionGroup>
+
+### Note Taking & Knowledge Management
+
+<AccordionGroup>
+  <Accordion title="Obsidian.nvim">
+    **Plugin:** `epwalsh/obsidian.nvim`
+    
+    Integrate Obsidian.md vault management into Neovim.
+    
+    **Configuration:**
+    - Workspace: `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Sharedvault`
+    - File type trigger: Markdown files only
+    - nvim-cmp completion enabled (min 2 chars)
+    - New notes location: notes_subdir
+    
+    **Daily Notes Settings:**
+    - Folder: `/daily notes`
+    - Date format: `%m-%d-%Y`
+    - Alias format: `%B %-d, %Y`
+    - Default tags: `daily-notes`
+    
+    **Dependencies:** plenary.nvim, nvim-cmp
+    
+    **Source:** `nvim/lua/plugins/obsidian.lua`
+  </Accordion>
+</AccordionGroup>
+
+### Code Completion & UI
+
+<AccordionGroup>
+  <Accordion title="nvim-cmp (Tab Completion Override)">
+    **Plugin:** `hrsh7th/nvim-cmp`
+    
+    Enhanced completion behavior with custom keybindings.
+    
+    **Custom Keybindings:**
+    - `<Tab>`: Auto-select first item and confirm, or select next item
+    - `<CR>` (Enter): Abort completion and insert newline
+    
+    **Additional Sources:**
+    - `hrsh7th/cmp-emoji` - Emoji completion support
+    
+    **Source:** `nvim/lua/plugins/tab-complete.lua`
+  </Accordion>
+
+  <Accordion title="Snacks.nvim Configuration">
+    **Plugin:** `folke/snacks.nvim`
+    
+    Custom configuration for the Snacks picker.
+    
+    **Picker Settings:**
+    - `hidden = true` - Show hidden files
+    - `ignored = true` - Show .gitignore files
+    
+    **Source:** `nvim/lua/plugins/snacks-config.lua`
+  </Accordion>
+
+  <Accordion title="LuaSnip">
+    **Plugin:** `L3MON4D3/LuaSnip`
+    
+    Snippet engine (keys disabled for custom completion behavior).
+    
+    **Source:** `nvim/lua/plugins/tab-complete.lua`
+  </Accordion>
+</AccordionGroup>
+
+### Color Schemes
+
+Multiple color schemes are available in the configuration:
+
+| Plugin | Repository | Active |
+|--------|-----------|--------|
+| Kanagawa | `rebelot/kanagawa.nvim` | No |
+| PaperColor | `NLKNguyen/papercolor-theme` | No |
+| Gruvbox | `ellisonleao/gruvbox.nvim` | No |
+| Rosé Pine | `rose-pine/neovim` | No |
+| TokyoDark | `tiagovla/tokyodark.nvim` | No |
+| Everforest | `sainnhe/everforest` | No |
+| OneDark | `navarasu/onedark.nvim` | **Yes** |
+
+<Note>
+The active colorscheme is **OneDark** with custom Visual mode highlighting (yellow background: `#ffff00`).
+</Note>
+
+**Source:** `nvim/lua/plugins/colorscheme.lua`
+
+### Development Tools
+
+<AccordionGroup>
+  <Accordion title="Mason Version Lock">
+    **Plugins:**
+    - `mason-org/mason.nvim` (v1.11.0)
+    - `mason-org/mason-lspconfig.nvim` (v1.32.0)
+    
+    Specific versions locked to ensure compatibility.
+    
+    **Source:** `nvim/lua/plugins/mason-workaround.lua`
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## LazyVim Extras
+
+The following LazyVim extra modules are enabled via `lazyvim.json`:
+
+### AI & Coding Assistance
+
+| Extra | Description |
+|-------|-------------|
+| `lazyvim.plugins.extras.ai.copilot-chat` | GitHub Copilot Chat integration |
+| `lazyvim.plugins.extras.coding.nvim-cmp` | nvim-cmp completion engine |
+
+### Language Support
+
+| Language | Extra Module |
+|----------|--------------|
+| C/C++ | `lazyvim.plugins.extras.lang.clangd` |
+| Go | `lazyvim.plugins.extras.lang.go` |
+| JSON | `lazyvim.plugins.extras.lang.json` |
+| Python | `lazyvim.plugins.extras.lang.python` |
+| Tailwind CSS | `lazyvim.plugins.extras.lang.tailwind` |
+| TypeScript | `lazyvim.plugins.extras.lang.typescript` |
+
+<Note>
+Each language extra includes LSP configuration, Treesitter parsers, formatters, linters, and language-specific keybindings.
+</Note>
+
+**Source:** `nvim/lazyvim.json`
+
+---
+
+## Plugin File Locations
+
+All plugin configuration files are located in:
+
+```
+nvim/lua/plugins/
+├── colorscheme.lua       # Color scheme configuration
+├── leetcode.lua          # LeetCode integration
+├── mason-workaround.lua  # Mason version locks
+├── obsidian.lua          # Obsidian vault integration
+├── snacks-config.lua     # Snacks picker settings
+├── tab-complete.lua      # Custom completion behavior
+└── vimbegood.lua         # Vim training game
+```
+
+LazyVim extras configuration:
+```
+nvim/lazyvim.json
+```

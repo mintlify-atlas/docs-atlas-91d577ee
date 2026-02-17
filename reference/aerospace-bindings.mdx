@@ -1,0 +1,288 @@
+---
+title: 'AeroSpace Keybindings'
+description: 'Complete AeroSpace window manager keybinding reference'
+---
+
+## Overview
+
+AeroSpace is a tiling window manager for macOS. This configuration uses `Alt` (Option) as the primary modifier key.
+
+<Note>
+**Primary Modifier:** `Alt` (Option key on macOS)
+
+**Secondary Modifier:** `Alt+Shift` for move/advanced operations
+</Note>
+
+---
+
+## Layout Management
+
+### Layout Switching
+
+| Keybinding | Command | Description |
+|------------|---------|-------------|
+| `Alt + /` | `layout tiles horizontal vertical` | Toggle between horizontal/vertical tiles layout |
+| `Alt + ,` | `layout accordion horizontal vertical` | Toggle between horizontal/vertical accordion layout |
+
+---
+
+## Focus Navigation
+
+Move focus between windows using Vi-style keys:
+
+| Keybinding | Command | Description |
+|------------|---------|-------------|
+| `Alt + h` | `focus left` | Focus window to the left |
+| `Alt + j` | `focus down` | Focus window below |
+| `Alt + k` | `focus up` | Focus window above |
+| `Alt + l` | `focus right` | Focus window to the right |
+
+---
+
+## Window Movement
+
+Move windows between positions using Vi-style keys with Shift:
+
+| Keybinding | Command | Description |
+|------------|---------|-------------|
+| `Alt + Shift + h` | `move left` | Move window to the left |
+| `Alt + Shift + j` | `move down` | Move window down |
+| `Alt + Shift + k` | `move up` | Move window up |
+| `Alt + Shift + l` | `move right` | Move window to the right |
+
+---
+
+## Window Resizing
+
+| Keybinding | Command | Description |
+|------------|---------|-------------|
+| `Alt + Shift + -` | `resize smart -50` | Decrease window size by 50px |
+| `Alt + Shift + =` | `resize smart +50` | Increase window size by 50px |
+
+<Note>
+The `resize smart` command automatically determines whether to resize width or height based on the current layout.
+</Note>
+
+---
+
+## Workspace Management
+
+### Switch to Workspace
+
+#### Numbered Workspaces (1-9)
+
+| Keybinding | Workspace |
+|------------|-----------|
+| `Alt + 1` | Workspace 1 |
+| `Alt + 2` | Workspace 2 |
+| `Alt + 3` | Workspace 3 |
+| `Alt + 4` | Workspace 4 |
+| `Alt + 5` | Workspace 5 |
+| `Alt + 6` | Workspace 6 |
+| `Alt + 7` | Workspace 7 |
+| `Alt + 8` | Workspace 8 |
+| `Alt + 9` | Workspace 9 |
+
+#### Lettered Workspaces (A-Z)
+
+<AccordionGroup>
+  <Accordion title="Workspaces A-M">
+    | Keybinding | Workspace |
+    |------------|-----------|
+    | `Alt + a` | Workspace A |
+    | `Alt + b` | Workspace B |
+    | `Alt + c` | Workspace C |
+    | `Alt + d` | Workspace D |
+    | `Alt + e` | Workspace E |
+    | `Alt + f` | Workspace F |
+    | `Alt + g` | Workspace G |
+    | `Alt + i` | Workspace I |
+    | `Alt + m` | Workspace M |
+  </Accordion>
+
+  <Accordion title="Workspaces N-Z">
+    | Keybinding | Workspace |
+    |------------|-----------|
+    | `Alt + n` | Workspace N |
+    | `Alt + o` | Workspace O |
+    | `Alt + p` | Workspace P |
+    | `Alt + q` | Workspace Q |
+    | `Alt + r` | Workspace R |
+    | `Alt + s` | Workspace S |
+    | `Alt + t` | Workspace T |
+    | `Alt + u` | Workspace U |
+    | `Alt + v` | Workspace V |
+    | `Alt + w` | Workspace W |
+    | `Alt + x` | Workspace X |
+    | `Alt + y` | Workspace Y |
+    | `Alt + z` | Workspace Z |
+  </Accordion>
+</AccordionGroup>
+
+### Move Window to Workspace
+
+Add `Shift` to move the current window to a workspace.
+
+#### Numbered Workspaces (1-9)
+
+| Keybinding | Command |
+|------------|---------|
+| `Alt + Shift + 1` | Move to Workspace 1 |
+| `Alt + Shift + 2` | Move to Workspace 2 |
+| `Alt + Shift + 3` | Move to Workspace 3 |
+| `Alt + Shift + 4` | Move to Workspace 4 |
+| `Alt + Shift + 5` | Move to Workspace 5 |
+| `Alt + Shift + 6` | Move to Workspace 6 |
+| `Alt + Shift + 7` | Move to Workspace 7 |
+| `Alt + Shift + 8` | Move to Workspace 8 |
+| `Alt + Shift + 9` | Move to Workspace 9 |
+
+#### Lettered Workspaces (A-Z)
+
+<AccordionGroup>
+  <Accordion title="Move to Workspaces A-M">
+    | Keybinding | Command |
+    |------------|---------|
+    | `Alt + Shift + a` | Move to Workspace A |
+    | `Alt + Shift + b` | Move to Workspace B |
+    | `Alt + Shift + c` | Move to Workspace C |
+    | `Alt + Shift + d` | Move to Workspace D |
+    | `Alt + Shift + e` | Move to Workspace E |
+    | `Alt + Shift + f` | Move to Workspace F |
+    | `Alt + Shift + g` | Move to Workspace G |
+    | `Alt + Shift + i` | Move to Workspace I |
+    | `Alt + Shift + m` | Move to Workspace M |
+  </Accordion>
+
+  <Accordion title="Move to Workspaces N-Z">
+    | Keybinding | Command |
+    |------------|---------|
+    | `Alt + Shift + n` | Move to Workspace N |
+    | `Alt + Shift + o` | Move to Workspace O |
+    | `Alt + Shift + p` | Move to Workspace P |
+    | `Alt + Shift + q` | Move to Workspace Q |
+    | `Alt + Shift + r` | Move to Workspace R |
+    | `Alt + Shift + s` | Move to Workspace S |
+    | `Alt + Shift + t` | Move to Workspace T |
+    | `Alt + Shift + u` | Move to Workspace U |
+    | `Alt + Shift + v` | Move to Workspace V |
+    | `Alt + Shift + w` | Move to Workspace W |
+    | `Alt + Shift + x` | Move to Workspace X |
+    | `Alt + Shift + y` | Move to Workspace Y |
+    | `Alt + Shift + z` | Move to Workspace Z |
+  </Accordion>
+</AccordionGroup>
+
+### Workspace Navigation
+
+| Keybinding | Command | Description |
+|------------|---------|-------------|
+| `Alt + Tab` | `workspace-back-and-forth` | Toggle between current and previous workspace |
+| `Alt + Shift + Tab` | `move-workspace-to-monitor --wrap-around next` | Move workspace to next monitor |
+
+---
+
+## Service Mode
+
+Service mode provides advanced window management operations.
+
+### Entering Service Mode
+
+| Keybinding | Command | Description |
+|------------|---------|-------------|
+| `Alt + Shift + ;` | `mode service` | Enter service mode |
+
+### Service Mode Commands
+
+Once in service mode, use these keys:
+
+| Keybinding | Command | Description |
+|------------|---------|-------------|
+| `Esc` | `reload-config` + `mode main` | Reload config and exit service mode |
+| `r` | `flatten-workspace-tree` + `mode main` | Reset layout and exit |
+| `f` | `layout floating tiling` + `mode main` | Toggle floating/tiling layout and exit |
+| `Backspace` | `close-all-windows-but-current` + `mode main` | Close all windows except current and exit |
+
+### Join Windows (Service Mode)
+
+Combine windows in service mode:
+
+| Keybinding | Command | Description |
+|------------|---------|-------------|
+| `Alt + Shift + h` | `join-with left` + `mode main` | Join with left window and exit |
+| `Alt + Shift + j` | `join-with down` + `mode main` | Join with window below and exit |
+| `Alt + Shift + k` | `join-with up` + `mode main` | Join with window above and exit |
+| `Alt + Shift + l` | `join-with right` + `mode main` | Join with right window and exit |
+
+<Note>
+Service mode commands automatically return to main mode after execution.
+</Note>
+
+---
+
+## Configuration Settings
+
+### General Settings
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `start-at-login` | `true` | Start AeroSpace at macOS login |
+| `key-mapping.preset` | `qwerty` | Keyboard layout preset |
+| `default-root-container-layout` | `tiles` | Default layout mode |
+| `default-root-container-orientation` | `auto` | Auto-detect orientation based on monitor |
+| `accordion-padding` | `30` | Padding size for accordion layout |
+
+### Normalization
+
+| Setting | Value |
+|---------|-------|
+| `enable-normalization-flatten-containers` | `true` |
+| `enable-normalization-opposite-orientation-for-nested-containers` | `true` |
+
+### Mouse Behavior
+
+| Setting | Command |
+|---------|---------|
+| `on-focused-monitor-changed` | `move-mouse monitor-lazy-center` |
+| `on-focus-changed` | `move-mouse window-lazy-center` |
+
+<Note>
+Mouse automatically moves to the center of the focused window or monitor.
+</Note>
+
+### Gaps Configuration
+
+All gaps are set to **0** (no spacing):
+
+| Setting | Value |
+|---------|-------|
+| `gaps.inner.horizontal` | 0 |
+| `gaps.inner.vertical` | 0 |
+| `gaps.outer.left` | 0 |
+| `gaps.outer.bottom` | 0 |
+| `gaps.outer.top` | 0 |
+| `gaps.outer.right` | 0 |
+
+---
+
+## Quick Reference Card
+
+### Most Common Operations
+
+| Task | Keybinding |
+|------|------------|
+| Focus window | `Alt + h/j/k/l` |
+| Move window | `Alt + Shift + h/j/k/l` |
+| Switch workspace | `Alt + 1-9` or `Alt + a-z` |
+| Move to workspace | `Alt + Shift + 1-9` or `Alt + Shift + a-z` |
+| Toggle layout | `Alt + /` |
+| Resize window | `Alt + Shift + -/=` |
+| Service mode | `Alt + Shift + ;` |
+
+---
+
+## Configuration File Location
+
+```
+aerospace/aerospace.toml
+```

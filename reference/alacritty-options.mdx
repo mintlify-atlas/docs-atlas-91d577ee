@@ -1,0 +1,173 @@
+---
+title: 'Alacritty Options'
+description: 'Alacritty terminal configuration reference'
+---
+
+## Configuration Overview
+
+This Alacritty configuration provides a modern, visually appealing terminal setup with the Coolnight theme and custom font settings.
+
+---
+
+## Theme
+
+### Color Scheme Import
+
+| Setting | Value |
+|---------|-------|
+| **Theme** | Coolnight |
+| **Path** | `~/.config/alacritty/themes/themes/coolnight.toml` |
+
+<Note>
+The Coolnight theme is imported from an external TOML file. Ensure the theme file exists at the specified path.
+</Note>
+
+---
+
+## Environment Variables
+
+| Variable | Value | Description |
+|----------|-------|-------------|
+| `TERM` | `xterm-256color` | Sets terminal type for 256-color support |
+
+<Note>
+The `TERM` variable is set to `xterm-256color` to ensure proper color support across applications.
+</Note>
+
+---
+
+## Window Configuration
+
+### Padding
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `window.padding.x` | `10` | Horizontal padding (left/right) |
+| `window.padding.y` | `10` | Vertical padding (top/bottom) |
+
+### Window Appearance
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `window.decorations` | `Buttonless` | macOS-style buttonless window decorations |
+| `window.opacity` | `0.8` | 80% window opacity (20% transparency) |
+| `window.blur` | `true` | Background blur effect enabled |
+| `window.startup_mode` | `Maximized` | Start in maximized window mode |
+
+<AccordionGroup>
+  <Accordion title="Window Decorations Explained">
+    The `Buttonless` decoration option removes the standard window control buttons (close, minimize, maximize) while keeping the window chrome. This provides a clean, minimal appearance.
+    
+    **Available values:**
+    - `Full` - Standard window decorations
+    - `None` - No window decorations
+    - `Transparent` - Transparent title bar (macOS)
+    - `Buttonless` - Title bar without buttons (macOS)
+  </Accordion>
+
+  <Accordion title="Transparency & Blur">
+    The combination of `opacity = 0.8` and `blur = true` creates a modern translucent effect where:
+    - The terminal background is 80% opaque (20% transparent)
+    - Background content is blurred for better readability
+    - Visual depth is added to the desktop environment
+    
+    <Note>
+    Background blur may require compositor support on Linux systems.
+    </Note>
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Font Configuration
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `font.normal.family` | `0xProto Nerd Font Mono` | Primary font family |
+| `font.size` | `16` | Font size in points |
+
+<Note>
+**0xProto Nerd Font Mono** is a programming font with Nerd Font icon support. Ensure this font is installed on your system.
+
+You can install Nerd Fonts from: https://www.nerdfonts.com/
+</Note>
+
+### Font Features
+
+- **Monospaced:** Fixed-width characters for alignment
+- **Nerd Font Icons:** Includes programming-related glyphs and icons
+- **Programming Ligatures:** Support for code ligatures (if enabled)
+
+---
+
+## Configuration File Structure
+
+The configuration uses TOML format with the following sections:
+
+```toml
+general.import = [...]    # Theme imports
+[env]                     # Environment variables
+[window]                  # Window settings
+[font]                    # Font configuration
+```
+
+---
+
+## Quick Reference
+
+### Visual Settings Summary
+
+| Feature | Setting | Value |
+|---------|---------|-------|
+| Theme | Color scheme | Coolnight |
+| Transparency | Opacity | 80% |
+| Blur | Background blur | Enabled |
+| Padding | Horizontal/Vertical | 10px |
+| Window Mode | Startup | Maximized |
+| Decorations | Style | Buttonless |
+
+### Typography Summary
+
+| Feature | Setting | Value |
+|---------|---------|-------|
+| Font Family | Primary | 0xProto Nerd Font Mono |
+| Font Size | Regular | 16pt |
+| Color Support | TERM | xterm-256color |
+
+---
+
+## Configuration File Location
+
+```
+alacritty/alacritty.toml
+```
+
+## Theme File Location
+
+```
+~/.config/alacritty/themes/themes/coolnight.toml
+```
+
+---
+
+## Platform Notes
+
+<AccordionGroup>
+  <Accordion title="macOS">
+    - `Buttonless` decorations are macOS-specific
+    - Background blur works natively
+    - `Maximized` startup mode respects macOS window management
+  </Accordion>
+
+  <Accordion title="Linux">
+    - Background blur requires a compositor (e.g., picom, compton)
+    - Window decorations depend on your window manager
+    - Some features may behave differently based on desktop environment
+  </Accordion>
+
+  <Accordion title="Windows">
+    - Windows-specific decoration options may differ
+    - Background blur support depends on Windows version
+    - Font rendering may vary from macOS/Linux
+  </Accordion>
+</AccordionGroup>

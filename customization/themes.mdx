@@ -1,0 +1,321 @@
+---
+title: 'Themes'
+description: 'Color schemes and theming configuration'
+---
+
+## Overview
+
+This configuration includes multiple color schemes for Neovim and coordinated theming for Tmux and Alacritty terminal emulator.
+
+## Neovim Color Schemes
+
+### Active Theme
+
+**OneDark** is currently set as the active color scheme with custom visual selection highlighting.
+
+```lua
+{
+  "LazyVim/LazyVim",
+  opts = {
+    colorscheme = "onedark",
+  },
+}
+```
+
+**Source**: `nvim/lua/plugins/colorscheme.lua:18-22`
+
+### Custom Highlights
+
+The OneDark theme includes a custom bright yellow visual selection highlight:
+
+```lua
+{
+  "navarasu/onedark.nvim",
+  opts = {
+    highlights = {
+      Visual = { bg = "#ffff00" },  -- Bright yellow background
+    },
+  },
+}
+```
+
+<Tip>
+The bright yellow visual selection makes it easier to see selected text in various lighting conditions.
+</Tip>
+
+### Installed Color Schemes
+
+Multiple color schemes are available for quick switching:
+
+<Tabs>
+  <Tab title="All Themes">
+    | Theme | Plugin | Description |
+    |-------|--------|-------------|
+    | **OneDark** | `navarasu/onedark.nvim` | Active theme with custom highlights |
+    | **Kanagawa** | `rebelot/kanagawa.nvim` | Dark theme inspired by famous painting |
+    | **PaperColor** | `NLKNguyen/papercolor-theme` | Light and dark theme with pastel colors |
+    | **Gruvbox** | `ellisonleao/gruvbox.nvim` | Retro groove color scheme |
+    | **Rose Pine** | `rose-pine/neovim` | Soho vibes for Neovim |
+    | **Tokyo Dark** | `tiagovla/tokyodark.nvim` | Dark colorscheme for night owls |
+    | **Everforest** | `sainnhe/everforest` | Comfortable green forest color scheme |
+  </Tab>
+  
+  <Tab title="Dark Themes">
+    - **OneDark** (Active)
+    - **Kanagawa**
+    - **Gruvbox**
+    - **Rose Pine**
+    - **Tokyo Dark**
+    - **Everforest**
+  </Tab>
+  
+  <Tab title="Light/Dark">
+    - **PaperColor** - Supports both light and dark variants
+    - **Gruvbox** - Supports both light and dark variants
+    - **Everforest** - Supports both light and dark variants
+  </Tab>
+</Tabs>
+
+### Configuration
+
+```lua
+return {
+  { "rebelot/kanagawa.nvim" },
+  { "NLKNguyen/papercolor-theme" },
+  { "ellisonleao/gruvbox.nvim" },
+  { "rose-pine/neovim" },
+  { "tiagovla/tokyodark.nvim" },
+  { "sainnhe/everforest" },
+  {
+    "navarasu/onedark.nvim",
+    opts = {
+      highlights = {
+        Visual = { bg = "#ffff00" },
+      },
+    },
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "onedark",
+    },
+  },
+}
+```
+
+**Source**: `nvim/lua/plugins/colorscheme.lua`
+
+### Switching Themes
+
+To change the active color scheme:
+
+<Accordion title="Method 1: Command Line">
+  Use the `:colorscheme` command in Neovim:
+  
+  ```vim
+  :colorscheme kanagawa
+  :colorscheme gruvbox
+  :colorscheme rose-pine
+  ```
+  
+  This change is temporary and will revert after restarting Neovim.
+</Accordion>
+
+<Accordion title="Method 2: LazyVim Picker">
+  1. Press `<leader>uC` (Space + u + C)
+  2. Select a color scheme from the picker
+  3. Preview and confirm your choice
+</Accordion>
+
+<Accordion title="Method 3: Permanent Change">
+  Edit `nvim/lua/plugins/colorscheme.lua` and change the colorscheme setting:
+  
+  ```lua
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "kanagawa",  -- Change this value
+    },
+  }
+  ```
+  
+  Then reload Neovim or run `:Lazy sync`
+</Accordion>
+
+## Tmux Theme
+
+### Catppuccin Theme
+
+Tmux uses the Catppuccin color scheme via the Dreams of Code variant.
+
+```bash
+set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
+```
+
+**Source**: `tmux/tmux.conf:26`
+
+<Note>
+The official Catppuccin plugin (`catppuccin/tmux`) is available but currently commented out.
+</Note>
+
+### Theme Features
+
+- Status bar with system information
+- Window list with active window highlighting
+- Session name display
+- Catppuccin Mocha color palette
+
+### Switching Tmux Themes
+
+To switch to the official Catppuccin theme:
+
+1. Edit `tmux/tmux.conf`
+2. Comment out the Dreams of Code variant:
+   ```bash
+   # set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
+   ```
+3. Uncomment the official plugin:
+   ```bash
+   set -g @plugin 'catppuccin/tmux'
+   ```
+4. Reload Tmux: `tmux source ~/.tmux.conf`
+5. Install the new plugin: Press `Prefix + I`
+
+## Alacritty Theme
+
+### Cool Night Theme
+
+Alacritty uses a custom Cool Night color scheme with transparency and blur effects.
+
+```toml
+general.import = [
+    "~/.config/alacritty/themes/themes/coolnight.toml"
+]
+
+[window]
+padding.x = 10
+padding.y = 10
+decorations = "Buttonless"
+opacity = 0.8
+blur = true
+```
+
+**Source**: `alacritty/alacritty.toml:1-14`
+
+### Theme Features
+
+<Tabs>
+  <Tab title="Visual Effects">
+    - **Opacity**: 0.8 (80% opaque, 20% transparent)
+    - **Blur**: Enabled for content behind the terminal
+    - **Decorations**: Buttonless (clean minimal look)
+    - **Padding**: 10px on all sides
+    - **Startup**: Maximized by default
+  </Tab>
+  
+  <Tab title="Font">
+    - **Family**: 0xProto Nerd Font Mono
+    - **Size**: 16pt
+    
+    ```toml
+    [font]
+    normal.family = "0xProto Nerd Font Mono"
+    size = 16
+    ```
+  </Tab>
+  
+  <Tab title="Terminal">
+    - **TERM**: xterm-256color
+    - **True Color**: Supported via terminal overrides
+    
+    ```toml
+    [env]
+    TERM = "xterm-256color"
+    ```
+  </Tab>
+</Tabs>
+
+### Changing Alacritty Themes
+
+Alacritty themes are stored in `~/.config/alacritty/themes/themes/`. To change the theme:
+
+1. Browse available themes in the themes directory
+2. Edit `alacritty/alacritty.toml`
+3. Change the import path:
+   ```toml
+   general.import = [
+       "~/.config/alacritty/themes/themes/your-theme.toml"
+   ]
+   ```
+4. Alacritty will automatically reload the configuration
+
+<Tip>
+You can find more Alacritty themes at [alacritty-theme](https://github.com/alacritty/alacritty-theme).
+</Tip>
+
+## Theme Coordination
+
+### Recommended Theme Combinations
+
+For a cohesive experience across all tools, here are some recommended theme combinations:
+
+<Accordion title="Dark Mode Combinations">
+  **Option 1: Catppuccin Everywhere**
+  - Neovim: Not available in current config (could add `catppuccin/nvim`)
+  - Tmux: `dreamsofcode-io/catppuccin-tmux`
+  - Alacritty: Use Catppuccin theme if available
+  
+  **Option 2: Tokyo Night**
+  - Neovim: `tokyodark` (similar aesthetic)
+  - Tmux: Catppuccin (complementary)
+  - Alacritty: Cool Night (current)
+  
+  **Option 3: Nature Theme**
+  - Neovim: `everforest`
+  - Tmux: Custom green theme
+  - Alacritty: Everforest theme
+</Accordion>
+
+<Accordion title="Light Mode Combinations">
+  **Option 1: PaperColor**
+  - Neovim: `papercolor` (light variant)
+  - Tmux: Keep current or switch to light theme
+  - Alacritty: Switch to light theme
+  
+  **Option 2: Gruvbox Light**
+  - Neovim: `gruvbox` with light background
+  - Tmux: Gruvbox light theme
+  - Alacritty: Gruvbox light theme
+</Accordion>
+
+## Terminal Settings
+
+### Color Support
+
+All tools are configured for true color (24-bit) support:
+
+**Tmux**:
+```bash
+set -g default-terminal "tmux-256color"
+set -ga terminal-overrides ',xterm-256color:Tc'
+set-option -sa terminal-overrides ",xterm*:Tc:RGB:sitm=\E[3m:ritm=\E[23m"
+```
+
+**Alacritty**:
+```toml
+[env]
+TERM = "xterm-256color"
+```
+
+<Note>
+Ensure your terminal emulator supports true color for the best visual experience.
+</Note>
+
+## Configuration Files
+
+<Accordion title="Source File Locations">
+  - **Neovim themes**: `nvim/lua/plugins/colorscheme.lua`
+  - **Tmux theme**: `tmux/tmux.conf`
+  - **Alacritty theme**: `alacritty/alacritty.toml`
+  - **Alacritty theme files**: `~/.config/alacritty/themes/themes/`
+</Accordion>

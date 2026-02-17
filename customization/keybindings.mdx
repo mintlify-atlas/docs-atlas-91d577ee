@@ -1,0 +1,255 @@
+---
+title: 'Keybindings'
+description: 'Custom keybindings across all tools'
+---
+
+## Overview
+
+This page documents all custom keybindings configured across Neovim, Tmux, and AeroSpace window manager. These keybindings are optimized for a productive development workflow with vim-style navigation.
+
+<Note>
+All Neovim keybindings use LazyVim defaults unless overridden. See the [LazyVim keymaps documentation](https://www.lazyvim.org/keymaps) for the complete list of default bindings.
+</Note>
+
+## Tmux Keybindings
+
+### Prefix Key
+
+The Tmux prefix has been remapped from the default `Ctrl+b` to `Ctrl+Space` for easier access.
+
+```bash
+# Prefix: Ctrl+Space
+set -g prefix C-Space
+bind C-Space send-prefix
+```
+
+### Copy Mode
+
+Tmux is configured with vim-style keybindings in copy mode:
+
+| Keybinding | Action | Description |
+|------------|--------|-------------|
+| `Prefix + [` | Enter copy mode | Start copy mode for scrolling and selection |
+| `v` | Begin selection | Start visual selection (in copy mode) |
+| `V` | Rectangle toggle | Toggle rectangle selection (in copy mode) |
+| `y` | Copy selection | Yank/copy the selected text (in copy mode) |
+
+```bash
+# Copy mode configuration
+setw -g mode-keys vi
+bind-key -T copy-mode-vi 'v' send -X begin-selection
+bind-key -T copy-mode-vi 'y' send -X copy-selection
+bind-key -T copy-mode-vi 'V' send -X rectangle-toggle
+```
+
+<Tip>
+Mouse support is enabled in Tmux, allowing you to scroll and select text with your mouse.
+</Tip>
+
+## AeroSpace Keybindings
+
+AeroSpace is a tiling window manager for macOS. All keybindings use the `Alt` modifier.
+
+### Window Focus
+
+Navigate between windows using vim-style hjkl navigation:
+
+| Keybinding | Action |
+|------------|--------|
+| `Alt+h` | Focus window to the left |
+| `Alt+j` | Focus window below |
+| `Alt+k` | Focus window above |
+| `Alt+l` | Focus window to the right |
+
+```toml
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+```
+
+### Window Movement
+
+Move windows around using `Alt+Shift` with vim-style navigation:
+
+| Keybinding | Action |
+|------------|--------|
+| `Alt+Shift+h` | Move window left |
+| `Alt+Shift+j` | Move window down |
+| `Alt+Shift+k` | Move window up |
+| `Alt+Shift+l` | Move window right |
+
+### Window Resizing
+
+| Keybinding | Action |
+|------------|--------|
+| `Alt+Shift+-` | Decrease window size by 50px |
+| `Alt+Shift+=` | Increase window size by 50px |
+
+### Layout Management
+
+| Keybinding | Action |
+|------------|--------|
+| `Alt+/` | Toggle between horizontal and vertical tiles layout |
+| `Alt+,` | Toggle accordion layout |
+
+### Workspace Navigation
+
+<Tabs>
+  <Tab title="Numbers">
+    Switch to numbered workspaces:
+    
+    | Keybinding | Workspace |
+    |------------|-----------|
+    | `Alt+1` through `Alt+9` | Switch to workspace 1-9 |
+  </Tab>
+  
+  <Tab title="Letters">
+    Switch to letter workspaces:
+    
+    | Keybinding | Workspace |
+    |------------|-----------|
+    | `Alt+a` | Workspace A |
+    | `Alt+b` | Workspace B |
+    | `Alt+c` | Workspace C |
+    | `Alt+d` | Workspace D |
+    | `Alt+e` | Workspace E |
+    | `Alt+f` | Workspace F |
+    | `Alt+g` | Workspace G |
+    | `Alt+i` | Workspace I |
+    | `Alt+m` | Workspace M |
+    | `Alt+n` | Workspace N |
+    | `Alt+o` | Workspace O |
+    | `Alt+p` | Workspace P |
+    | `Alt+q` | Workspace Q |
+    | `Alt+r` | Workspace R |
+    | `Alt+s` | Workspace S |
+    | `Alt+t` | Workspace T |
+    | `Alt+u` | Workspace U |
+    | `Alt+v` | Workspace V |
+    | `Alt+w` | Workspace W |
+    | `Alt+x` | Workspace X |
+    | `Alt+y` | Workspace Y |
+    | `Alt+z` | Workspace Z |
+  </Tab>
+</Tabs>
+
+### Move Windows to Workspaces
+
+<Accordion title="Move to Numbered Workspaces">
+  Use `Alt+Shift+1` through `Alt+Shift+9` to move the current window to workspaces 1-9.
+  
+  ```toml
+  alt-shift-1 = 'move-node-to-workspace 1'
+  alt-shift-2 = 'move-node-to-workspace 2'
+  # ... up to 9
+  ```
+</Accordion>
+
+<Accordion title="Move to Letter Workspaces">
+  Use `Alt+Shift+<letter>` to move the current window to the corresponding letter workspace.
+  
+  Example: `Alt+Shift+c` moves the window to workspace C.
+  
+  ```toml
+  alt-shift-a = 'move-node-to-workspace A'
+  alt-shift-b = 'move-node-to-workspace B'
+  # ... through the alphabet
+  ```
+</Accordion>
+
+### Quick Actions
+
+| Keybinding | Action |
+|------------|--------|
+| `Alt+Tab` | Switch to previous workspace |
+| `Alt+Shift+Tab` | Move workspace to next monitor |
+| `Alt+Shift+;` | Enter service mode |
+
+### Service Mode
+
+Service mode provides additional window management commands. Press `Alt+Shift+;` to enter service mode:
+
+| Keybinding | Action | Returns to Main Mode |
+|------------|--------|---------------------|
+| `Esc` | Reload configuration | Yes |
+| `r` | Reset/flatten workspace layout | Yes |
+| `f` | Toggle floating/tiling layout | Yes |
+| `Backspace` | Close all windows except current | Yes |
+| `Alt+Shift+h/j/k/l` | Join window with adjacent window | Yes |
+
+```toml
+[mode.service.binding]
+esc = ['reload-config', 'mode main']
+r = ['flatten-workspace-tree', 'mode main']
+f = ['layout floating tiling', 'mode main']
+backspace = ['close-all-windows-but-current', 'mode main']
+```
+
+## Neovim Keybindings
+
+### Default Configuration
+
+This configuration uses LazyVim, which provides extensive default keybindings. No custom keybindings are defined beyond the LazyVim defaults.
+
+<Tip>
+See [LazyVim Keymaps](https://www.lazyvim.org/keymaps) for the complete list of default keybindings.
+</Tip>
+
+### Notable LazyVim Defaults
+
+Here are some essential LazyVim keybindings you'll use frequently:
+
+<Tabs>
+  <Tab title="General">
+    | Keybinding | Action |
+    |------------|--------|
+    | `<Space>` | Leader key |
+    | `<leader>l` | Lazy (plugin manager) |
+    | `<leader>qq` | Quit all |
+    | `<C-h/j/k/l>` | Navigate windows |
+  </Tab>
+  
+  <Tab title="File Operations">
+    | Keybinding | Action |
+    |------------|--------|
+    | `<leader>ff` | Find files |
+    | `<leader>fr` | Recent files |
+    | `<leader>fg` | Grep (live search) |
+    | `<leader>fb` | File browser |
+    | `<leader>fn` | New file |
+  </Tab>
+  
+  <Tab title="LSP">
+    | Keybinding | Action |
+    |------------|--------|
+    | `gd` | Go to definition |
+    | `gr` | References |
+    | `K` | Hover documentation |
+    | `<leader>ca` | Code actions |
+    | `<leader>cr` | Rename |
+    | `<leader>cf` | Format document |
+  </Tab>
+  
+  <Tab title="Git">
+    | Keybinding | Action |
+    |------------|--------|
+    | `<leader>gg` | Lazygit |
+    | `<leader>gb` | Blame line |
+    | `<leader>gd` | Diff |
+    | `]h` | Next hunk |
+    | `[h` | Previous hunk |
+  </Tab>
+</Tabs>
+
+### Plugin-Specific Keybindings
+
+Custom keybindings are configured through plugin specifications. See the [Plugins](/customization/plugins) page for plugin-specific keybindings.
+
+## Configuration Files
+
+<Accordion title="Source File Locations">
+  - **Neovim keymaps**: `nvim/lua/config/keymaps.lua`
+  - **Tmux configuration**: `tmux/tmux.conf`
+  - **AeroSpace configuration**: `aerospace/aerospace.toml`
+</Accordion>

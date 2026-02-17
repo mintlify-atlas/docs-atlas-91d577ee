@@ -1,0 +1,297 @@
+---
+title: 'Alacritty Configuration'
+description: 'Alacritty terminal emulator configuration with custom theme and font'
+---
+
+## Overview
+
+This Alacritty configuration provides a modern, aesthetically pleasing terminal setup with transparency, blur effects, and a custom color theme. It's optimized for a clean and distraction-free terminal experience.
+
+<Note>
+  This configuration uses the Coolnight theme and 0xProto Nerd Font for enhanced readability and icon support.
+</Note>
+
+## Configuration Structure
+
+```toml
+general.import = [
+    "~/.config/alacritty/themes/themes/coolnight.toml"
+]
+[ env ]
+TERM = "xterm-256color"
+
+[window]
+# Window settings
+
+[font]
+# Font configuration
+```
+
+## Environment Variables
+
+```toml
+[ env ]
+TERM = "xterm-256color"
+```
+
+Sets the terminal type to `xterm-256color` for compatibility with most CLI applications and proper color support.
+
+## Window Configuration
+
+```toml
+[window]
+padding.x = 10
+padding.y = 10
+
+decorations = "Buttonless"
+opacity = 0.8
+blur = true
+startup_mode = "Maximized"
+```
+
+<Tabs>
+  <Tab title="Padding">
+    ```toml
+    padding.x = 10
+    padding.y = 10
+    ```
+    Adds 10 pixels of padding around the terminal content for better visual spacing.
+  </Tab>
+  
+  <Tab title="Decorations">
+    ```toml
+    decorations = "Buttonless"
+    ```
+    Removes window buttons (minimize, maximize, close) for a cleaner, minimal look.
+  </Tab>
+  
+  <Tab title="Transparency">
+    ```toml
+    opacity = 0.8
+    blur = true
+    ```
+    - **opacity = 0.8**: 80% opacity for see-through effect
+    - **blur = true**: Blurs the background behind the window (macOS)
+  </Tab>
+  
+  <Tab title="Startup">
+    ```toml
+    startup_mode = "Maximized"
+    ```
+    Opens Alacritty in maximized mode by default.
+  </Tab>
+</Tabs>
+
+### Visual Effects
+
+<Accordion title="Transparency & Blur Details">
+  The combination of 80% opacity with blur creates a modern, macOS-style transparent window effect. The blur applies to content behind the terminal window, making text more readable against the background.
+  
+  <Note>
+    Blur effects are primarily supported on macOS. On other platforms, you'll get transparency without the blur.
+  </Note>
+</Accordion>
+
+## Font Configuration
+
+```toml
+[font]
+normal.family = "0xProto Nerd Font Mono"
+
+#regular
+size = 16
+```
+
+### Font Details
+
+- **Family**: `0xProto Nerd Font Mono`
+  - A programming-focused monospace font
+  - Includes Nerd Font icons for enhanced terminal UI
+  - Excellent readability for code
+  
+- **Size**: `16pt`
+  - Comfortable reading size for most displays
+  - Adjust based on your monitor size and resolution
+
+<Tip>
+  Install Nerd Fonts from [nerdfonts.com](https://www.nerdfonts.com/) to ensure proper icon rendering in terminal applications.
+</Tip>
+
+### Font Installation
+
+To install 0xProto Nerd Font:
+
+<Tabs>
+  <Tab title="macOS">
+    ```bash
+    brew tap homebrew/cask-fonts
+    brew install font-0xproto-nerd-font
+    ```
+  </Tab>
+  
+  <Tab title="Linux">
+    ```bash
+    # Download from Nerd Fonts releases
+    mkdir -p ~/.local/share/fonts
+    cd ~/.local/share/fonts
+    # Download and extract 0xProto Nerd Font
+    fc-cache -fv
+    ```
+  </Tab>
+  
+  <Tab title="Manual">
+    1. Visit [nerdfonts.com/font-downloads](https://www.nerdfonts.com/font-downloads)
+    2. Download "0xProto Nerd Font"
+    3. Install the font files on your system
+    4. Restart Alacritty
+  </Tab>
+</Tabs>
+
+## Theme
+
+```toml
+general.import = [
+    "~/.config/alacritty/themes/themes/coolnight.toml"
+]
+```
+
+The configuration uses the **Coolnight** theme, a dark color scheme optimized for long coding sessions.
+
+### Theme Installation
+
+1. Clone the Alacritty themes repository:
+   ```bash
+   mkdir -p ~/.config/alacritty/themes
+   git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+   ```
+
+2. The coolnight theme will be available at:
+   ```
+   ~/.config/alacritty/themes/themes/coolnight.toml
+   ```
+
+<Accordion title="Switching Themes">
+  To use a different theme, replace `coolnight.toml` with any other theme from the themes directory:
+  
+  ```toml
+  general.import = [
+      "~/.config/alacritty/themes/themes/tokyo-night.toml"
+  ]
+  ```
+  
+  Popular alternatives:
+  - `gruvbox_dark.toml`
+  - `nord.toml`
+  - `catppuccin_mocha.toml`
+  - `dracula.toml`
+</Accordion>
+
+## Complete Configuration Reference
+
+| Setting | Value | Purpose |
+|---------|-------|---------|
+| **TERM** | xterm-256color | Terminal type for compatibility |
+| **Padding X/Y** | 10px | Internal window padding |
+| **Decorations** | Buttonless | Minimal window chrome |
+| **Opacity** | 0.8 | 80% transparency |
+| **Blur** | true | Background blur effect (macOS) |
+| **Startup Mode** | Maximized | Launch in maximized state |
+| **Font** | 0xProto Nerd Font Mono | Monospace font with icons |
+| **Font Size** | 16pt | Text size |
+| **Theme** | Coolnight | Color scheme |
+
+## Installation
+
+1. Install Alacritty:
+   ```bash
+   # macOS
+   brew install --cask alacritty
+   
+   # Linux (Ubuntu/Debian)
+   sudo apt install alacritty
+   ```
+
+2. Create config directory:
+   ```bash
+   mkdir -p ~/.config/alacritty
+   ```
+
+3. Copy configuration:
+   ```bash
+   cp alacritty.toml ~/.config/alacritty/alacritty.toml
+   ```
+
+4. Install theme repository:
+   ```bash
+   git clone https://github.com/alacritty/alacritty-theme ~/.config/alacritty/themes
+   ```
+
+5. Install 0xProto Nerd Font (see Font Installation section above)
+
+6. Launch Alacritty
+
+## Customization Tips
+
+<Accordion title="Adjust Transparency">
+  Modify the opacity value between 0.0 (fully transparent) and 1.0 (fully opaque):
+  
+  ```toml
+  opacity = 0.9  # 90% opacity (less transparent)
+  opacity = 0.6  # 60% opacity (more transparent)
+  ```
+</Accordion>
+
+<Accordion title="Change Font Size">
+  Adjust the font size based on your display:
+  
+  ```toml
+  size = 14  # Smaller for high-DPI displays
+  size = 18  # Larger for easier reading
+  ```
+</Accordion>
+
+<Accordion title="Disable Window Effects">
+  For better performance or on systems without compositor support:
+  
+  ```toml
+  opacity = 1.0
+  blur = false
+  ```
+</Accordion>
+
+<Accordion title="Window Decorations">
+  Change window decoration style:
+  
+  ```toml
+  decorations = "Full"        # Standard window with buttons
+  decorations = "None"        # No decorations at all
+  decorations = "Buttonless"  # macOS style without buttons
+  ```
+</Accordion>
+
+## Troubleshooting
+
+<Note>
+  **Font not appearing correctly?** Make sure you've installed the Nerd Font variant and restarted Alacritty.
+</Note>
+
+<Tip>
+  If transparency doesn't work, ensure your window compositor is enabled (Linux) or you're on macOS 10.14+.
+</Tip>
+
+## Platform Notes
+
+### macOS
+- Full support for blur effects
+- Buttonless decorations work perfectly
+- Transparency works out of the box
+
+### Linux
+- Transparency requires a compositor (like picom or compton)
+- Blur effects may not work without specific compositor support
+- Window decorations depend on your window manager
+
+### Windows
+- Limited transparency support
+- No blur effects
+- Consider using WSL2 for better terminal experience

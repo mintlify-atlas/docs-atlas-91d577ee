@@ -1,0 +1,278 @@
+---
+title: Introduction
+description: A modern, cohesive development environment for macOS
+icon: house
+---
+
+# Welcome to yangleyland/configs
+
+A carefully curated collection of configuration files that create a powerful, keyboard-driven development environment. Built for developers who value efficiency, aesthetics, and seamless integration between tools.
+
+## What's Inside
+
+This repository brings together four essential tools, each configured to work harmoniously with the others:
+
+<CardGroup cols={2}>
+  <Card
+    title="Neovim"
+    icon="code"
+    href="#neovim-configuration"
+  >
+    LazyVim-based setup with AI integrations, Obsidian support, and custom color schemes
+  </Card>
+  <Card
+    title="Tmux"
+    icon="window-restore"
+    href="#tmux-configuration"
+  >
+    Vim keybindings with Catppuccin theme for beautiful terminal multiplexing
+  </Card>
+  <Card
+    title="Alacritty"
+    icon="terminal"
+    href="#alacritty-configuration"
+  >
+    GPU-accelerated terminal with 0xProto Nerd Font and transparency effects
+  </Card>
+  <Card
+    title="AeroSpace"
+    icon="window-maximize"
+    href="#aerospace-configuration"
+  >
+    Tiling window manager for macOS with vim-inspired navigation
+  </Card>
+</CardGroup>
+
+## Philosophy
+
+This configuration is built around three core principles:
+
+<Steps>
+  <Step title="Keyboard-First Navigation">
+    Every tool is configured with vim-style keybindings, minimizing mouse usage and maximizing efficiency
+  </Step>
+  <Step title="Visual Consistency">
+    Coordinated color schemes and theming create a cohesive aesthetic across all tools
+  </Step>
+  <Step title="Modern Features">
+    AI integrations, GPU acceleration, and contemporary tooling for a cutting-edge development experience
+  </Step>
+</Steps>
+
+## Neovim Configuration
+
+The heart of this setup is a LazyVim-based Neovim configuration with extensive customization.
+
+### Key Features
+
+- **Package Manager**: Uses [lazy.nvim](https://github.com/folke/lazy.nvim) for fast, efficient plugin management
+- **Base Framework**: Built on [LazyVim](https://github.com/LazyVim/LazyVim) for sensible defaults
+- **AI Integration**: Configured for AI-assisted coding workflows
+- **Obsidian Support**: Native markdown and note-taking integration via obsidian.nvim
+
+### Plugin Highlights
+
+```lua
+-- Color Schemes (nvim/lua/plugins/colorscheme.lua)
+return {
+  { "rebelot/kanagawa.nvim" },
+  { "NLKNguyen/papercolor-theme" },
+  { "ellisonleao/gruvbox.nvim" },
+  { "rose-pine/neovim" },
+  { "tiagovla/tokyodark.nvim" },
+  { "sainnhe/everforest" },
+  {
+    "navarasu/onedark.nvim",
+    opts = {
+      highlights = {
+        Visual = { bg = "#ffff00" },
+      },
+    },
+  },
+}
+```
+
+### Obsidian Integration
+
+Seamlessly work with Obsidian vaults directly from Neovim:
+
+```lua
+-- nvim/lua/plugins/obsidian.lua
+opts = {
+  workspaces = {
+    {
+      name = "personal",
+      path = "/Users/leylandyang/Library/Mobile Documents/iCloud~md~obsidian/Documents/Sharedvault",
+    },
+  },
+  completion = {
+    nvim_cmp = true,
+    min_chars = 2,
+  },
+  daily_notes = {
+    folder = "/daily notes",
+    date_format = "%m-%d-%Y",
+  },
+}
+```
+
+## Tmux Configuration
+
+A clean, efficient terminal multiplexer setup with vim keybindings and modern aesthetics.
+
+### Core Features
+
+```bash
+# tmux/tmux.conf
+
+# Vim mode in copy mode
+setw -g mode-keys vi
+
+# Remap prefix to Ctrl+Space
+set -g prefix C-Space
+
+# Mouse support
+set -g mouse on
+
+# Catppuccin theme
+set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
+```
+
+### Vim-Style Copy Mode
+
+```bash
+# Enter copy mode with Prefix+[
+bind-key [ copy-mode
+
+# Vim-like navigation in copy mode
+bind-key -T copy-mode-vi 'v' send -X begin-selection
+bind-key -T copy-mode-vi 'y' send -X copy-selection
+bind-key -T copy-mode-vi 'V' send -X rectangle-toggle
+```
+
+<Note>
+  The prefix key is remapped from the default `Ctrl+b` to `Ctrl+Space` for easier access
+</Note>
+
+## Alacritty Configuration
+
+A modern, GPU-accelerated terminal emulator with carefully chosen aesthetics.
+
+### Visual Configuration
+
+```toml
+# alacritty/alacritty.toml
+
+[window]
+padding.x = 10
+padding.y = 10
+decorations = "Buttonless"
+opacity = 0.8
+blur = true
+startup_mode = "Maximized"
+
+[font]
+normal.family = "0xProto Nerd Font Mono"
+size = 16
+```
+
+### Theme Setup
+
+```toml
+# Import the Coolnight theme
+general.import = [
+    "~/.config/alacritty/themes/themes/coolnight.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+```
+
+<Note>
+  The configuration includes access to 100+ pre-configured themes in the `alacritty/themes/themes/` directory
+</Note>
+
+## AeroSpace Configuration
+
+A powerful tiling window manager designed specifically for macOS, bringing i3-like functionality to Apple's desktop.
+
+### Vim-Inspired Navigation
+
+```toml
+# aerospace/aerospace.toml
+
+# Focus windows with vim keys
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# Move windows with vim keys
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+```
+
+### Workspace Management
+
+```toml
+# Quick workspace switching
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+# ... up to alt-9
+
+# Alpha-numeric workspaces for organization
+alt-c = 'workspace C'  # Code
+alt-w = 'workspace W'  # Web
+alt-m = 'workspace M'  # Music
+```
+
+### Smart Features
+
+```toml
+# Automatic behavior
+start-at-login = true
+enable-normalization-flatten-containers = true
+on-focus-changed = "move-mouse window-lazy-center"
+
+# Layout configuration
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+```
+
+<Warning>
+  AeroSpace is macOS-only. If you're on Linux, consider i3, sway, or bspwm instead
+</Warning>
+
+## Getting Started
+
+Ready to set up your development environment? Head over to the [Installation Guide](/installation) for step-by-step instructions.
+
+<CardGroup cols={2}>
+  <Card
+    title="Installation"
+    icon="download"
+    href="/installation"
+  >
+    Get everything up and running in minutes
+  </Card>
+  <Card
+    title="GitHub Repository"
+    icon="github"
+    href="https://github.com/yangleyland/configs"
+  >
+    View the source code and contribute
+  </Card>
+</CardGroup>
+
+## Requirements
+
+<Note>
+  **Platform**: macOS (for AeroSpace) or Linux (substitute with i3/sway)
+  
+  **Prerequisites**:
+  - Git
+  - Homebrew (macOS) or package manager of choice
+  - Basic familiarity with vim keybindings
+</Note>

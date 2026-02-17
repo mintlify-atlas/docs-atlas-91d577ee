@@ -1,0 +1,202 @@
+---
+title: 'Tmux Configuration'
+description: 'Tmux configuration with vim keybindings and Catppuccin theme'
+---
+
+## Overview
+
+This tmux configuration features vim-style keybindings, modern terminal support, and the Catppuccin color theme. It's optimized for a vim-like workflow with intuitive navigation and copy mode.
+
+<Note>
+  Prefix key is remapped from `Ctrl+b` to `Ctrl+Space` for easier access.
+</Note>
+
+## Terminal Configuration
+
+### Color Support
+
+```bash
+set-option -sa terminal-overrides ",xterm*:Tc:RGB:sitm=\E[3m:ritm=\E[23m"
+set -g default-terminal "tmux-256color"
+set -ga terminal-overrides ',xterm-256color:Tc'
+set -as terminal-overrides ',xterm*:sitm=\E[3m'
+```
+
+- **True color support** (24-bit RGB)
+- **Italic text support** for enhanced syntax highlighting
+- Compatible with modern terminal emulators
+
+### Performance & Behavior
+
+```bash
+set-option -sg escape-time 10
+set-option -g focus-events on
+set -g mouse on
+```
+
+<Accordion title="What do these settings do?">
+  - **escape-time 10**: Reduces delay when pressing ESC (important for vim users)
+  - **focus-events on**: Enables focus events for better vim integration
+  - **mouse on**: Allows mouse interaction with panes and windows
+</Accordion>
+
+## Window Management
+
+```bash
+set -g renumber-windows on
+set -g base-index 1
+```
+
+- **Automatic window renumbering**: Keeps window numbers sequential
+- **Base index 1**: Windows start at 1 instead of 0 (easier keyboard access)
+
+## Prefix Key
+
+```bash
+unbind C-b
+set -g prefix C-Space
+bind C-Space send-prefix
+```
+
+The prefix key is changed from `Ctrl+b` to `Ctrl+Space`:
+
+<Tip>
+  `Ctrl+Space` is easier to press with one hand and doesn't conflict with common vim keybindings.
+</Tip>
+
+## Vim Keybindings
+
+### Copy Mode
+
+```bash
+setw -g mode-keys vi
+bind-key [ copy-mode
+```
+
+Enable vim keybindings in copy mode and enter with `Prefix+[`.
+
+### Visual Selection
+
+```bash
+bind-key -T copy-mode-vi 'v' send -X begin-selection
+bind-key -T copy-mode-vi 'y' send -X copy-selection
+bind-key -T copy-mode-vi 'V' send -X rectangle-toggle
+```
+
+<Tabs>
+  <Tab title="Selection">
+    Press `v` to start visual selection mode (like vim)
+  </Tab>
+  <Tab title="Copy">
+    Press `y` to yank/copy the selected text
+  </Tab>
+  <Tab title="Block Selection">
+    Press `V` to toggle rectangular (block) selection mode
+  </Tab>
+</Tabs>
+
+## Keybinding Reference
+
+### Essential Commands
+
+| Keybinding | Action |
+|------------|--------|
+| `Ctrl+Space` | Prefix key (triggers tmux commands) |
+| `Prefix+[` | Enter copy mode |
+| `v` (in copy mode) | Begin visual selection |
+| `y` (in copy mode) | Yank (copy) selection |
+| `V` (in copy mode) | Toggle rectangle selection |
+
+<Note>
+  All copy mode keybindings require entering copy mode first with `Prefix+[`.
+</Note>
+
+## Theme
+
+### Plugin Manager
+
+```bash
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
+
+run '~/.tmux/plugins/tpm/tpm'
+```
+
+This configuration uses:
+- **TPM** (Tmux Plugin Manager) for plugin management
+- **Catppuccin** theme for a modern, aesthetic appearance
+
+### Installing Plugins
+
+1. Install TPM:
+   ```bash
+   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+   ```
+
+2. Source the configuration:
+   ```bash
+   tmux source ~/.tmux.conf
+   ```
+
+3. Install plugins:
+   - Press `Prefix+I` (capital i) to fetch and install plugins
+
+<Tip>
+  To update plugins later, press `Prefix+U`
+</Tip>
+
+## Installation
+
+1. Copy `tmux.conf` to `~/.tmux.conf` or `~/.config/tmux/tmux.conf`
+
+2. Install TPM (plugin manager):
+   ```bash
+   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+   ```
+
+3. Start tmux:
+   ```bash
+   tmux
+   ```
+
+4. Install plugins:
+   - Press `Ctrl+Space` then `I` (capital i)
+
+5. Reload configuration:
+   ```bash
+   tmux source ~/.tmux.conf
+   ```
+
+## Workflow Tips
+
+<Accordion title="Copy Mode Workflow">
+  1. `Prefix+[` - Enter copy mode
+  2. Navigate with vim keys (h, j, k, l)
+  3. `v` - Start visual selection
+  4. Navigate to select text
+  5. `y` - Copy selection
+  6. `q` or `Enter` - Exit copy mode
+</Accordion>
+
+<Accordion title="Window Switching">
+  Since windows start at index 1, use `Prefix+1`, `Prefix+2`, etc. to switch between windows directly.
+</Accordion>
+
+<Accordion title="Mouse Support">
+  With mouse mode enabled, you can:
+  - Click to switch panes
+  - Drag pane borders to resize
+  - Click status bar to switch windows
+  - Right-click for context menu
+</Accordion>
+
+## Customization
+
+To customize this configuration further:
+
+- **Change prefix**: Modify the `set -g prefix` line
+- **Adjust colors**: Configure Catppuccin plugin settings
+- **Add more plugins**: Add `set -g @plugin` lines before the `run` command
+- **Window behavior**: Modify the `set -g` options for windows
+
+The configuration is minimal and focused, making it easy to extend with your own customizations.

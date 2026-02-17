@@ -1,0 +1,341 @@
+---
+title: 'Plugins'
+description: 'Neovim plugins and Tmux plugins configuration'
+---
+
+## Overview
+
+This configuration uses LazyVim as the base, with additional plugins customized for specific workflows including coding practice, note-taking, and competitive programming.
+
+## Neovim Plugins
+
+### Plugin Manager
+
+This configuration uses [lazy.nvim](https://github.com/folke/lazy.nvim) through LazyVim for plugin management.
+
+<Tip>
+All plugins are lazy-loaded by default for optimal startup performance.
+</Tip>
+
+### Custom Plugins
+
+<Tabs>
+  <Tab title="Development">
+    #### VimBeGood
+    
+    A game to practice Vim motions and improve your speed.
+    
+    ```lua
+    {
+      "ThePrimeagen/vim-be-good",
+      cmd = "VimBeGood",
+      lazy = true,
+    }
+    ```
+    
+    **Usage**: Run `:VimBeGood` to start practice games
+    
+    **Source**: `nvim/lua/plugins/vimbegood.lua`
+    
+    ---
+    
+    #### Leetcode.nvim
+    
+    Solve Leetcode problems directly from Neovim with syntax highlighting and test running.
+    
+    ```lua
+    {
+      "kawre/leetcode.nvim",
+      build = ":TSUpdate html",
+      dependencies = {
+        "nvim-telescope/telescope.nvim",
+        "nvim-lua/plenary.nvim",
+        "MunifTanjim/nui.nvim",
+      },
+      opts = {
+        lang = "python3",
+      },
+    }
+    ```
+    
+    **Default Language**: Python3
+    
+    **Dependencies**: Telescope, Plenary, Nui
+    
+    **Source**: `nvim/lua/plugins/leetcode.lua`
+    
+    <Note>
+    Requires TreeSitter HTML parser for proper rendering.
+    </Note>
+  </Tab>
+  
+  <Tab title="Productivity">
+    #### Obsidian.nvim
+    
+    Integration with Obsidian for note-taking and knowledge management.
+    
+    ```lua
+    {
+      "epwalsh/obsidian.nvim",
+      version = "*",
+      lazy = true,
+      ft = "markdown",
+      dependencies = {
+        "nvim-lua/plenary.nvim",
+        "hrsh7th/nvim-cmp",
+      },
+      opts = {
+        workspaces = {
+          {
+            name = "personal",
+            path = "~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Sharedvault",
+          },
+        },
+        completion = {
+          nvim_cmp = true,
+          min_chars = 2,
+        },
+        new_notes_location = "notes_subdir",
+        daily_notes = {
+          folder = "/daily notes",
+          date_format = "%m-%d-%Y",
+          alias_format = "%B %-d, %Y",
+          default_tags = { "daily-notes" },
+        },
+      },
+    }
+    ```
+    
+    **Features**:
+    - iCloud sync support
+    - nvim-cmp completion integration
+    - Daily notes with custom formatting
+    - Auto-tagging for daily notes
+    
+    **Workspace Path**: `~/Library/Mobile Documents/iCloud~md~obsidian/Documents/Sharedvault`
+    
+    **Source**: `nvim/lua/plugins/obsidian.lua`
+    
+    <Tip>
+    Only loads when opening markdown files for better performance.
+    </Tip>
+    
+    ---
+    
+    #### Snacks.nvim Configuration
+    
+    Enhanced file picker with hidden and ignored file support.
+    
+    ```lua
+    {
+      "folke/snacks.nvim",
+      opts = {
+        picker = {
+          hidden = true,    -- Show hidden files
+          ignored = true,   -- Show .gitignore files
+        },
+      },
+    }
+    ```
+    
+    **Source**: `nvim/lua/plugins/snacks-config.lua`
+  </Tab>
+  
+  <Tab title="Completion">
+    #### Tab Completion Enhancement
+    
+    Custom configuration for nvim-cmp with Tab key completion behavior.
+    
+    ```lua
+    {
+      "hrsh7th/nvim-cmp",
+      dependencies = {
+        "hrsh7th/cmp-emoji",
+      },
+      opts = function(_, opts)
+        local cmp = require("cmp")
+        
+        opts.mapping = vim.tbl_extend("force", opts.mapping, {
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              local entry = cmp.get_selected_entry()
+              if not entry then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+              else
+                cmp.confirm()
+              end
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<CR>"] = cmp.mapping(function(fallback)
+            cmp.abort()
+            fallback()
+          end, { "i", "s", "c" }),
+        })
+      end,
+    }
+    ```
+    
+    **Key Behaviors**:
+    - `Tab`: Auto-selects first item if none selected, confirms if item is selected
+    - `Enter`: Aborts completion and inserts newline (doesn't auto-complete)
+    - Emoji completion support via cmp-emoji
+    
+    **Source**: `nvim/lua/plugins/tab-complete.lua`
+    
+    <Note>
+    LuaSnip keys are disabled in this configuration to prevent conflicts.
+    </Note>
+  </Tab>
+  
+  <Tab title="Version Pinning">
+    #### Mason Version Workaround
+    
+    Pinned versions for Mason LSP installer to ensure stability.
+    
+    ```lua
+    {
+      { "mason-org/mason.nvim", version = "1.11.0" },
+      { "mason-org/mason-lspconfig.nvim", version = "1.32.0" },
+    }
+    ```
+    
+    **Purpose**: Prevents breaking changes from upstream updates
+    
+    **Source**: `nvim/lua/plugins/mason-workaround.lua`
+  </Tab>
+</Tabs>
+
+### Color Scheme Plugins
+
+Multiple color schemes are installed. See the [Themes](/customization/themes) page for details.
+
+## Tmux Plugins
+
+Tmux plugins are managed by [TPM](https://github.com/tmux-plugins/tpm) (Tmux Plugin Manager).
+
+### Installed Plugins
+
+| Plugin | Description | Repository |
+|--------|-------------|------------|
+| **TPM** | Tmux Plugin Manager | `tmux-plugins/tpm` |
+| **Catppuccin Tmux** | Catppuccin color scheme for Tmux | `dreamsofcode-io/catppuccin-tmux` |
+
+### Configuration
+
+```bash
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'dreamsofcode-io/catppuccin-tmux'
+
+# Initialize TPM (keep this at the bottom of tmux.conf)
+run '~/.tmux/plugins/tpm/tpm'
+```
+
+**Source**: `tmux/tmux.conf:25-29`
+
+<Note>
+The official Catppuccin plugin (`catppuccin/tmux`) is commented out in favor of the Dreams of Code variant.
+</Note>
+
+### Installing Tmux Plugins
+
+<Accordion title="Installation Steps">
+  1. Install TPM if not already installed:
+     ```bash
+     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+     ```
+  
+  2. Reload Tmux configuration:
+     ```bash
+     tmux source ~/.tmux.conf
+     ```
+  
+  3. Install plugins by pressing `Prefix + I` (Ctrl+Space + I)
+  
+  4. Update plugins: `Prefix + U`
+  
+  5. Uninstall plugins: `Prefix + alt + u`
+</Accordion>
+
+## LazyVim Extras
+
+LazyVim provides additional plugin collections that can be imported. This configuration builds on LazyVim's defaults.
+
+<Tip>
+To see all available LazyVim extras, run `:LazyExtras` in Neovim.
+</Tip>
+
+## Managing Plugins
+
+### Neovim Plugin Management
+
+<Tabs>
+  <Tab title="Commands">
+    | Command | Action |
+    |---------|--------|
+    | `:Lazy` | Open Lazy plugin manager UI |
+    | `:Lazy update` | Update all plugins |
+    | `:Lazy sync` | Install missing and update plugins |
+    | `:Lazy clean` | Remove unused plugins |
+    | `:Lazy profile` | Profile plugin loading times |
+  </Tab>
+  
+  <Tab title="Keybindings">
+    | Key | Action (in Lazy UI) |
+    |-----|---------------------|
+    | `u` | Update plugins |
+    | `i` | Install plugins |
+    | `c` | Check for updates |
+    | `l` | View log |
+    | `p` | Profile |
+    | `?` | Show help |
+  </Tab>
+</Tabs>
+
+### Adding New Plugins
+
+To add a new Neovim plugin:
+
+1. Create a new file in `nvim/lua/plugins/` (e.g., `my-plugin.lua`)
+2. Add your plugin specification:
+
+```lua
+return {
+  "username/plugin-name",
+  lazy = true,  -- Optional: lazy load
+  opts = {
+    -- Plugin options
+  },
+}
+```
+
+3. Restart Neovim or run `:Lazy sync`
+
+### Adding Tmux Plugins
+
+To add a new Tmux plugin:
+
+1. Add the plugin line to `tmux/tmux.conf`:
+
+```bash
+set -g @plugin 'username/plugin-name'
+```
+
+2. Reload Tmux configuration: `tmux source ~/.tmux.conf`
+3. Install the plugin: Press `Prefix + I`
+
+## Configuration Files
+
+<Accordion title="Source File Locations">
+  - **Neovim plugins directory**: `nvim/lua/plugins/`
+  - **Individual plugin files**:
+    - `nvim/lua/plugins/colorscheme.lua`
+    - `nvim/lua/plugins/leetcode.lua`
+    - `nvim/lua/plugins/obsidian.lua`
+    - `nvim/lua/plugins/tab-complete.lua`
+    - `nvim/lua/plugins/vimbegood.lua`
+    - `nvim/lua/plugins/snacks-config.lua`
+    - `nvim/lua/plugins/mason-workaround.lua`
+  - **Tmux plugins**: `tmux/tmux.conf`
+</Accordion>

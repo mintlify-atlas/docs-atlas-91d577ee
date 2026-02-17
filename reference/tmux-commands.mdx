@@ -1,0 +1,122 @@
+---
+title: 'Tmux Commands'
+description: 'Complete tmux keybinding and command reference'
+---
+
+## Prefix Key
+
+The tmux prefix has been remapped from the default `Ctrl+b` to:
+
+<Note>
+**Prefix:** `Ctrl+Space` (C-Space)
+</Note>
+
+Press `Ctrl+Space` followed by a command key to execute tmux commands.
+
+---
+
+## Copy Mode
+
+### Entering Copy Mode
+
+| Keybinding | Action |
+|------------|--------|
+| `Prefix + [` | Enter copy mode |
+
+<Note>
+Copy mode uses **Vi keybindings** for navigation and text selection.
+</Note>
+
+### Copy Mode Navigation & Selection
+
+Once in copy mode, use these Vi-style keybindings:
+
+| Keybinding | Action |
+|------------|--------|
+| `v` | Begin selection (visual mode) |
+| `V` | Toggle rectangle selection mode |
+| `y` | Copy selection to clipboard |
+| `h/j/k/l` | Move cursor (Vi navigation) |
+| `w/b` | Move by word forward/backward |
+| `0/$` | Move to start/end of line |
+| `gg/G` | Move to start/end of buffer |
+
+---
+
+## Terminal Settings
+
+### Display Configuration
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `default-terminal` | `tmux-256color` | Terminal type for tmux |
+| `terminal-overrides` | `xterm*:Tc:RGB:sitm=\E[3m:ritm=\E[23m` | True color + italic support |
+| `escape-time` | `10` | Reduced escape key delay |
+| `mode-keys` | `vi` | Use Vi keybindings in copy mode |
+
+### Window Configuration
+
+| Setting | Value | Description |
+|---------|-------|-------------|
+| `renumber-windows` | `on` | Automatically renumber windows |
+| `base-index` | `1` | Start window numbering at 1 |
+| `mouse` | `on` | Mouse support enabled |
+| `focus-events` | `on` | Focus events enabled |
+
+---
+
+## Plugins
+
+This configuration uses TPM (Tmux Plugin Manager) with the following plugins:
+
+| Plugin | Repository | Description |
+|--------|-----------|-------------|
+| TPM | `tmux-plugins/tpm` | Tmux Plugin Manager |
+| Catppuccin Theme | `dreamsofcode-io/catppuccin-tmux` | Catppuccin color scheme for tmux |
+
+<Note>
+The default `catppuccin/tmux` plugin is commented out in favor of the dreamsofcode.io variant.
+</Note>
+
+### Installing Plugins
+
+To install tmux plugins:
+
+1. Press `Prefix + I` (capital i) to fetch and install plugins
+2. Press `Prefix + U` (capital u) to update plugins
+3. Press `Prefix + alt + u` to uninstall plugins not in the list
+
+---
+
+## Configuration Summary
+
+### Key Features
+
+- **Custom Prefix:** `Ctrl+Space` for ergonomic access
+- **Vi Mode:** Full Vi keybindings in copy mode
+- **256-Color Support:** True color terminal with RGB support
+- **Mouse Support:** Click and drag enabled
+- **Italic Support:** Proper italic text rendering
+- **Window Renumbering:** Automatic gap filling when windows close
+- **Fast Escape:** 10ms escape time for better responsiveness
+
+### Terminal Compatibility
+
+The configuration includes terminal overrides for:
+- `xterm*` variants
+- `xterm-256color` with true color support
+- Italic text support (`sitm`/`ritm` escape sequences)
+
+---
+
+## Configuration File Location
+
+```
+tmux/tmux.conf
+```
+
+## Plugin Installation Location
+
+```
+~/.tmux/plugins/tpm/tpm
+```

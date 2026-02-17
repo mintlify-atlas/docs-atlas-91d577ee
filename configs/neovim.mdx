@@ -1,0 +1,251 @@
+---
+title: 'Neovim Configuration'
+description: 'LazyVim-based Neovim configuration with language support and custom plugins'
+---
+
+## Overview
+
+This Neovim configuration is built on top of [LazyVim](https://lazyvim.org), a Neovim setup powered by lazy.nvim. It includes language support for multiple programming languages, AI-powered coding assistance, and productivity plugins.
+
+<Note>
+  This configuration uses LazyVim's modular structure with custom plugins and settings.
+</Note>
+
+## Structure
+
+The configuration follows LazyVim's standard directory structure:
+
+```
+nvim/
+├── init.lua                 # Entry point
+├── lazyvim.json            # LazyVim extras configuration
+└── lua/
+    ├── config/
+    │   ├── autocmds.lua    # Auto commands
+    │   ├── keymaps.lua     # Custom keymaps
+    │   ├── lazy.lua        # Lazy.nvim bootstrap
+    │   └── options.lua     # Vim options
+    └── plugins/            # Custom plugins
+```
+
+## Core Configuration
+
+### init.lua
+
+The entry point simply bootstraps LazyVim:
+
+```lua
+-- bootstrap lazy.nvim, LazyVim and your plugins
+require("config.lazy")
+```
+
+### Options
+
+Located in `lua/config/options.lua`:
+
+```lua
+-- Set working directory as root
+vim.g.root_spec = { "cwd" }
+```
+
+This configuration sets the current working directory as the project root instead of using git root.
+
+### Auto Commands
+
+Custom visual selection highlighting in `lua/config/autocmds.lua`:
+
+```lua
+-- Custom visual selection colors (yellow background, black foreground)
+vim.api.nvim_set_hl(0, "Visual", { bg = "#ffff00", fg = "#000000" })
+```
+
+## Language Support
+
+The configuration includes LazyVim extras for multiple languages via `lazyvim.json`:
+
+<Tabs>
+  <Tab title="Python">
+    ```json
+    "lazyvim.plugins.extras.lang.python"
+    ```
+    Full Python language support with LSP, linting, and formatting.
+  </Tab>
+  
+  <Tab title="TypeScript">
+    ```json
+    "lazyvim.plugins.extras.lang.typescript"
+    ```
+    TypeScript/JavaScript support with ts-server.
+  </Tab>
+  
+  <Tab title="Go">
+    ```json
+    "lazyvim.plugins.extras.lang.go"
+    ```
+    Go language support with gopls.
+  </Tab>
+  
+  <Tab title="C/C++">
+    ```json
+    "lazyvim.plugins.extras.lang.clangd"
+    ```
+    C/C++ support using clangd LSP.
+  </Tab>
+  
+  <Tab title="Others">
+    - **JSON**: `lazyvim.plugins.extras.lang.json`
+    - **Tailwind CSS**: `lazyvim.plugins.extras.lang.tailwind`
+  </Tab>
+</Tabs>
+
+## Plugins
+
+### AI Coding Assistant
+
+<Accordion title="GitHub Copilot Chat">
+  ```json
+  "lazyvim.plugins.extras.ai.copilot-chat"
+  ```
+  
+  Integrated AI pair programming with GitHub Copilot Chat for inline suggestions and conversations.
+</Accordion>
+
+### Colorscheme
+
+Multiple colorscheme options are available in `lua/plugins/colorscheme.lua`:
+
+```lua
+return {
+  { "rebelot/kanagawa.nvim" },
+  { "NLKNguyen/papercolor-theme" },
+  { "ellisonleao/gruvbox.nvim" },
+  { "rose-pine/neovim" },
+  { "tiagovla/tokyodark.nvim" },
+  { "sainnhe/everforest" },
+  {
+    "navarasu/onedark.nvim",
+    opts = {
+      highlights = {
+        Visual = { bg = "#ffff00" },
+      },
+    },
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "onedark",
+    },
+  },
+}
+```
+
+<Tip>
+  The default colorscheme is set to **onedark** with custom yellow visual selection highlighting.
+</Tip>
+
+### Obsidian Integration
+
+Note-taking integration with Obsidian in `lua/plugins/obsidian.lua`:
+
+```lua
+{
+  "epwalsh/obsidian.nvim",
+  version = "*",
+  lazy = true,
+  ft = "markdown",
+  opts = {
+    workspaces = {
+      {
+        name = "personal",
+        path = "/Users/leylandyang/Library/Mobile Documents/iCloud~md~obsidian/Documents/Sharedvault",
+      },
+    },
+    completion = {
+      nvim_cmp = true,
+      min_chars = 2,
+    },
+    new_notes_location = "notes_subdir",
+    daily_notes = {
+      folder = "/daily notes",
+      date_format = "%m-%d-%Y",
+      alias_format = "%B %-d, %Y",
+      default_tags = { "daily-notes" },
+    },
+  },
+}
+```
+
+**Features:**
+- iCloud-synced vault integration
+- Autocomplete for notes (min 2 characters)
+- Daily notes with custom date formatting
+- Automatic daily-notes tagging
+
+### LeetCode Plugin
+
+Solve LeetCode problems directly in Neovim:
+
+```lua
+{
+  "kawre/leetcode.nvim",
+  build = ":TSUpdate html",
+  dependencies = {
+    "nvim-telescope/telescope.nvim",
+    "nvim-lua/plenary.nvim",
+    "MunifTanjim/nui.nvim",
+  },
+  opts = {
+    lang = "python3",
+  },
+}
+```
+
+Default language is set to **Python 3** for LeetCode problems.
+
+### File Picker Configuration
+
+Snacks.nvim picker with extended file visibility:
+
+```lua
+{
+  "folke/snacks.nvim",
+  opts = {
+    picker = {
+      hidden = true,    -- Show hidden files
+      ignored = true,   -- Show .gitignore files
+    },
+  },
+}
+```
+
+## Completion
+
+The configuration uses `nvim-cmp` for autocompletion:
+
+```json
+"lazyvim.plugins.extras.coding.nvim-cmp"
+```
+
+This provides intelligent code completion across all supported languages.
+
+## Installation
+
+1. Backup your existing Neovim configuration
+2. Clone this configuration to `~/.config/nvim`
+3. Launch Neovim - plugins will install automatically
+4. Restart Neovim after initial installation
+
+<Note>
+  LazyVim will automatically install and configure all plugins on first launch.
+</Note>
+
+## Customization
+
+To customize this configuration:
+
+- **Options**: Edit `lua/config/options.lua`
+- **Keymaps**: Edit `lua/config/keymaps.lua`
+- **Plugins**: Add new files to `lua/plugins/`
+- **Language Support**: Modify `lazyvim.json` extras array
+
+Each plugin file in `lua/plugins/` is automatically loaded by LazyVim.
